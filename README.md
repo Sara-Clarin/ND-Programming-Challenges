@@ -4,8 +4,8 @@
 
 This is the [CSE-30872-FA21] reading and challenge assignments repository for:
 
-- **Name**:     Domer McDomerson
-- **NetID**:    dmcdomer
+- **Name**:     Sara Clarin
+- **NetID**:    sclarin2
 
 [CSE-30872-FA21]:   https://www3.nd.edu/~pbui/teaching/cse.30872.fa21/
 
