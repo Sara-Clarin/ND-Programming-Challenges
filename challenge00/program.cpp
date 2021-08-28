@@ -48,7 +48,7 @@ int main(int argc, char * argv[]){
              }
          }
        
-        cout << matrixNumber << ".  Minimum four square is: " << min << endl;
+        cout << matrixNumber << ". Minimum four square is: " << min << endl;
         matrixNumber++;
         cin >> N;
         cin >> M;
