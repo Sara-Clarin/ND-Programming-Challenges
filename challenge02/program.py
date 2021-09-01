@@ -24,16 +24,16 @@ def determine_balance( line ):
             while line[index_2] != ">": 
                 index_2 += 1
 
-            tag = line[index_1 : index_2 + 1]   # pull anything of the form '< * >'
+            tag = line[index_1 : index_2 + 1]   # anything of the form '< * >' (both closing or opening)
 
             if "</" not in tag:                  # place opening tags on stack
                 stack.put(tag)
 
-            else:                               # closing tag: compare with most recent stack element (opening tag)
+            elif "</" in tag:                               # closing tag: compare with most recent stack element (opening tag)
                 left_check = stack.get()
                 left_check = left_check[0] + "/" + left_check[ 1:len(left_check)]
                 if left_check != tag:
-                    balanced = False
+                    return False
                     break;
 
            
@@ -51,12 +51,10 @@ def determine_balance( line ):
 def main():
     
     for line in sys.stdin.readlines():
+
         balanced = determine_balance( line )
 
-        if balanced:
-            print("Balanced")
-        else:
-            print("Unbalanced")
+        print("Balanced" if balanced else "Unbalanced")
 
 
 
