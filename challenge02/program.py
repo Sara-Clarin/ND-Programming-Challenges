@@ -4,15 +4,16 @@ Sara Clarin
 '''
 #!/usr/bin/env/python3
 
-import sys
-from queue import LifoQueue
+import sys,queue
+
 
 ## FUNCTIONS
 
 def determine_balance( line ):
-    stack = LifoQueue()
+    stack = queue.LifoQueue()
     index_1 = 0
     index_2 = 0
+    timeout = 0.000000001
     balanced = True
     n = len(line)
 
@@ -29,12 +30,14 @@ def determine_balance( line ):
             if "</" not in tag:                  # place opening tags on stack
                 stack.put(tag)
 
-            elif "</" in tag:                               # closing tag: compare with most recent stack element (opening tag)
-                left_check = stack.get()
-                left_check = left_check[0] + "/" + left_check[ 1:len(left_check)]
-                if left_check != tag:
+            else:                               # closing tag: compare with most recent stack element (opening tag)
+                try:
+                    left_check = stack.get( timeout=timeout)
+                    left_check = left_check[0] + "/" + left_check[ 1:len(left_check)]
+                    if left_check != tag:
+                        return False
+                except queue.Empty:
                     return False
-                    break;
 
            
         index_1 += 1
