@@ -26,7 +26,7 @@ def determine_balance( line ):
 
             tag = line[index_1 : index_2 + 1]   # pull anything of the form '< * >'
 
-            if "/" not in tag:                  # place opening tags on stack
+            if "</" not in tag:                  # place opening tags on stack
                 stack.put(tag)
 
             else:                               # closing tag: compare with most recent stack element (opening tag)
