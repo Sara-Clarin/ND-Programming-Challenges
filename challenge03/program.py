@@ -69,11 +69,14 @@ def main():
         line = line.strip().split()
         #line = [ int(i) for i in line ]
         #n = len(numlist)
+        index1 = -1
+        index2 = -1
 
         if count % 2 == 0:
             numlist = [ int(i) for i in line ]
-            pivot  = find_max_index( numlist ) + 1
             n = len(numlist)
+            if numlist[0] > numlist[n-1]:
+                pivot  = find_max_index( numlist ) + 1
             #print(numlist)
             #print(f'pivot: {pivot}')
 
@@ -88,11 +91,12 @@ def main():
 
             # case not rotated and Bui tricked me
             if numlist[0] < numlist[n-1]:
-                index = find_target_binary( numlist, 0, n -1, target)
-                if index != -1:
-                    print(f'{target} found at index {index}')
+                index1 = find_target_binary( numlist, 0, n -1, target)
+                print(f'{target} found at index {index1}') if index1 != -1 else print(f"{target} not found")
+
             elif numlist[pivot] == target:
                 print(f'{target} found at index {pivot}')
+
             else:
                 index1 = find_target_binary( numlist, 0, pivot-1 , target)
                 index2 = find_target_binary( numlist, (pivot) , n - 1, target)
