@@ -36,7 +36,7 @@ def find_max_index( data ):
             end = middle - 1
             
 
-    print(data) 
+    #print(data) 
     return -1
 
 
