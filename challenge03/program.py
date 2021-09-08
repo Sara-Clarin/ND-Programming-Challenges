@@ -18,7 +18,7 @@ def find_max_index( data ):
     if ( end == 1):
         return 0
  
-    while start <= end:
+    while start < end:
         middle = (start + end) // 2
         midpoint = data[middle]
         
@@ -44,7 +44,7 @@ def find_target_binary( numlist , start, end, target):
     ''' Uses the maximum and minimum as start and end values for normal binary search'''
     
 
-    while start <= end:
+    while start < end:
         middle = (start + end) // 2  
         #print(f"middle_index: {middle}")
         midpoint = numlist[middle]
