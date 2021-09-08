@@ -43,6 +43,8 @@ def find_max_index( data ):
 def find_target_binary( numlist , start, end, target):
     ''' Uses the maximum and minimum as start and end values for normal binary search'''
     
+    if (start == end):
+        return start
 
     while start < end:
         middle = (start + end) // 2  
@@ -57,8 +59,7 @@ def find_target_binary( numlist , start, end, target):
 
         else:                   # go right
             start = middle + 1
-    
-        
+          
     return -1
  
 
@@ -85,14 +86,19 @@ def main():
             #print(f'Sublist1: {numlist[0:(pivot)]}')
             #print(f'Sublist 2: {numlist[pivot:]}')
 
-            if numlist[pivot] == target:
+            # case not rotated and Bui tricked me
+            if numlist[0] < numlist[n-1]:
+                index = find_target_binary( numlist, 0, n -1, target)
+                if index != -1:
+                    print(f'{target} found at index {index}')
+            elif numlist[pivot] == target:
                 print(f'{target} found at index {pivot}')
             else:
                 index1 = find_target_binary( numlist, 0, pivot-1 , target)
                 index2 = find_target_binary( numlist, (pivot) , n - 1, target)
 
                 if (index1 != -1 or index2 != -1):
-                    print(f"{target} found at index {index1}") if index1 != -1 else print(f"{target} found at index: {index2}")
+                    print(f"{target} found at index {index1}") if index1 != -1 else print(f"{target} found at index {index2}")
                 else:
                     print(f"{target} was not found")
 
