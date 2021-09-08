@@ -86,15 +86,15 @@ def main():
             #print(f'Sublist 2: {numlist[pivot:]}')
 
             if numlist[pivot] == target:
-                print(f'Target found at index: {pivot}')
+                print(f'{target} found at index {pivot}')
             else:
                 index1 = find_target_binary( numlist, 0, pivot-1 , target)
                 index2 = find_target_binary( numlist, (pivot) , n - 1, target)
 
                 if (index1 != -1 or index2 != -1):
-                    print(f"Target found at index: {index1}") if index1 != -1 else print("Target found at index: {index2}")
+                    print(f"{target} found at index {index1}") if index1 != -1 else print(f"{target} found at index: {index2}")
                 else:
-                    print("Target not found")
+                    print(f"{target} was not found")
 
 
 if __name__ == "__main__":
