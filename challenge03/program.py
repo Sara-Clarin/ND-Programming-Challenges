@@ -75,10 +75,7 @@ def main():
     
     for count,line in enumerate(sys.stdin.readlines()):
         line = line.strip().split()
-        index1 = -1
-        index2 = -1
         target = -1
-
 
         if count % 2 == 0:                      # every other line is an array
             numlist = [ int(i) for i in line ]
