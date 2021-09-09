@@ -92,7 +92,7 @@ def main():
             # case not rotated and Bui tricked me
             if numlist[0] < numlist[n-1]:
                 index1 = find_target_binary( numlist, 0, n -1, target)
-                print(f'{target} found at index {index1}') if index1 != -1 else print(f"{target} not found")
+                print(f'{target} found at index {index1}') if index1 != -1 else print(f"{target} was not found")
             
             elif len(numlist) == 1 and numlist[0] == target:    
                 print(f'{target} found at index 0')
