@@ -41,7 +41,8 @@ def find_max_binary( numlist):
             
 
 def find_target_binary( numlist , target):
-    ''' adjusted binary search using pivot as start and end values conditionally'''
+    ''' adjusted binary search using pivot as start and end values conditionally
+    runs in O(logn) time complexity'''
     if not numlist:
         return -1
 
@@ -85,36 +86,11 @@ def main():
             if numlist[0] > numlist[n-1]:
                 pivot  = find_max_recursive( numlist, 0, n) + 1
 
-        else:
-            target = "".join(line)
-            target = int(target)
+        else:                                # these lines are the target
+            target = int("".join(line))
             index = find_target_binary( numlist, target)
             print(f'{target} found at index {index}') if index != -1 else print(f'{target} was not found')
 
-            '''
-            if len(numlist) <= 1:
-                print(f'{target} found at index 0') if numlist[0] == target else print(f'{target} was not found') 
-
-  
-            elif numlist[0] < numlist[n-1]:
-                index1 = find_target_binary( numlist, 0, n -1, target)
-                print(f'{target} found at index {index1}') if index1 != -1 else print(f"{target} was not found")
-            
-            #elif len(numlist) == 1 and numlist[0] == target:    
-                #print(f'{target} found at index 0')
-
-            elif numlist[pivot] == target:
-                print(f'{target} found at index {pivot}')
-
-            else:
-                index1 = find_target_binary( numlist, 0, pivot , target)
-                index2 = find_target_binary( numlist, pivot , n - 1, target)
-
-                if index1 != -1 or index2 != -1:
-                    print(f"{target} found at index {index1}") if index1 != -1 else print(f"{target} found at index {index2}")
-                else:
-                    print(f"{target} was not found")
-                '''
 
 if __name__ == "__main__":
     main()
