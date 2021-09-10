@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+
+# Sara Clarin
+# Challenge04: Concurrent events
+# 9/9/2021
+
 import sys, collections
 from enum import IntEnum
 import functools
@@ -14,11 +19,11 @@ Event = collections.namedtuple("Event", "time type")
 events = []
 
 def count_concurrents( events ):
+    ''' Function that sorts events based on time and then on START or END value, and keeps record of rooms needed'''
     in_session = 0
     rooms = 0
 
-    events = sorted( events, key=lambda e: (e.time, e.type))  # sort by time, then if it's start or end
-    #events = sorted( events, key=lambda e: e.type)
+    events = sorted( events, key=lambda e: (e.time, e.type))  # sort by time, then start or end
 
     for event in events:
         if event.type == EType.START:   # new event started: add to stack
@@ -29,10 +34,9 @@ def count_concurrents( events ):
 
         if in_session > rooms:          # ramzi needs to book another room
             rooms += 1 
-        #print(f'{event.time} {event.type}')
-        
 
     return rooms
+
 
 def main():
 
@@ -41,17 +45,12 @@ def main():
         n = int( line.strip() )
         count += 1
         events.clear()
+
         for i in range(n):
-            start, end =  sys.stdin.readline().split()
-            #event1 = Event(start , EType.START)
-            #event2 = Event( end , EType.END)
-            #events.append(event1)
-            #events.append(event2)
+            start, end = map(int, sys.stdin.readline().split())
             events.append( Event(start, EType.START))
             events.append( Event(end, EType.END))
 
-    #for event in events:
-        #print(f'{event.time} {event.type}')
    
         num_concurrent = count_concurrents(events)
         print(f'{count}. Maximum number of concurrent events is {num_concurrent}')
