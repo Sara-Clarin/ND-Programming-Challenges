@@ -22,31 +22,30 @@ void find_max_cycle( ll i, ll j){
         n = a;
         count = 1;
         while ( n > 1){
-            count += 1;
+            //count += 1;
 
-            if (n % 2)
+            if (n % 2)      // if n is odd
                 n = 3*n + 1;
 
-            else{
+            else{           // n is even
                 n = n/2;
             }
          
-            //count += 1;
+            count += 1;
         }
         
          collatz[count] = a;
     }    
 
-
-    /*for (auto e: collatz){
+   /*
+    for (auto e: collatz){
         cout << e.first << " , " << e.second << endl;
-    } dk */
+    } */
 
 
     // Find and report max count and argmax count
     auto m = std::max_element(
-        std::begin(collatz), std::end(collatz)
-        
+        std::begin(collatz), std::end(collatz) 
     );
 
     //cout << "maximum: ";
