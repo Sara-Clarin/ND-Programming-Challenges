@@ -8,15 +8,6 @@
 using namespace std;
 
 void print_triplet( vector<int> &s){
-    //cout << line << endl;
-    //line = stoi(line);
-    //for (int i = 0; i < length(line); i++){
-     /*  for (auto e: line){
-        int element = atoi( (const char*) e);
-        s.push_back( element );
-    }
-    return s;
-*/
     vector<int> v = s;
     //sort(v.begin(), v.end());
     int n = v.size();
@@ -56,7 +47,40 @@ void get_triplets( vector<int> &s, vector<int> &d, size_t k){
 
 }
 
+void find_triplets_iterative( vector<int> &s){
 
+    for (int i = 0; i < s.size(); i++){
+        int mid = i + 1;
+        int end = s.size() -1;
+
+        if (i > 0 && s[i] == s[i-1]){
+            continue;
+        }
+
+        // start from second index and iterate all other options
+        while (mid < end){
+            if ( end < s.size() -1 && s[end] == s[end +1]){  // duplicates adjacents
+                end --;
+                continue;
+            }
+
+            if ( s[i] + s[mid] + s[end] > 0){ // sum too large: go backwards
+                end --;
+            }else if ( s[i] + s[mid] + s[end] < 0){ // sum to small: go forwards
+                mid ++;
+            }else {                                 // sum = 0
+
+                cout << s[i] << " + " << s[mid] << " + " << s[end] << endl;
+                mid++;
+                end--;
+            }
+         }
+
+
+    }
+
+
+}
 
 int main( int argc, char **argv){
     char * buf;
@@ -78,7 +102,7 @@ int main( int argc, char **argv){
             cout << e << " ";
         } cout << endl; */
 
-        get_triplets(  s, d, 0 );
+        find_triplets_iterative(d );
         s.clear();
         d.clear();
      
