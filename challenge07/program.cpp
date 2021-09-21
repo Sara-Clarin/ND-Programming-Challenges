@@ -78,7 +78,7 @@ void find_triplets_iterative( vector<int> &s){
 
 
     }
-
+    // cout << endl;
 
 }
 
@@ -86,10 +86,16 @@ int main( int argc, char **argv){
     char * buf;
     char buffer[BUFSIZ];
     string line;
-    int i;   
-    vector<int> s;
- 
-    while ( getline(cin, line)){
+    int i;
+    int  co = 0; 
+    vector<int> s; int c;
+    //ifstream ifs; 
+
+    //while ( getline(cin, line)){
+    while( getline(cin, line) ){
+       // getline(cin, line);
+       if (co != 0){ cout << endl; }
+
         istringstream ss(line);
         vector<int> d;
         while( ss >> i){
@@ -105,7 +111,26 @@ int main( int argc, char **argv){
         find_triplets_iterative(d );
         s.clear();
         d.clear();
-     
+        //cout << endl;
+        /*
+         scanf( "%d", &c);
+        if (c != EOF)  {
+            cout << endl;
+        }   */
+        /*
+        auto itr = line.end() ;
+        cout << endl;
+        cout << *itr;
+        if (*itr == EOF){
+            cout << "end found!";
+        }
+        cout << endl;*/
+        /*
+        size_t found = line.find("eof");
+        if ( found != string::npos){
+            cout << "FOUND! ";
+        } */
+        co++;
     }
 
 
