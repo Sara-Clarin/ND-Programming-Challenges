@@ -17,9 +17,8 @@ MOVES = {
     ' ' : ''
 }
 
-#results = []
 
-def find_rook_moves( N, start , sequence, totalmoves):
+def find_rook_moves( N, start , sequence):
     '''
     N: the number of steps to continue recursing
     start: the current number
@@ -27,28 +26,15 @@ def find_rook_moves( N, start , sequence, totalmoves):
     '''
     
     # base case: when N = 0 or we've done N steps
-    #if ( N <= 0):
-    if len(sequence) == totalmoves:
+    if N == 0:
         return [sequence]
-        #print(sequence)
-        #return
         
     # recursive step
     results = []
-    #results.extend( sequence)
-    count = 1
-    for ind, move in enumerate(MOVES[start]):
-        #print(move)
-        #sequce = sequence +  (find_rook_
-         #if count == 2:
-
-         
-         #dummy = find_rook_moves( N-1,  move  , sequence + start, totalmoves )
-         #if ind > 1 and results[ind - 1 ] != dummy:
+    for move in MOVES[start]:
          results.extend(
-             find_rook_moves( N-1,  move  , sequence + start, totalmoves )
+             find_rook_moves( N-1,  move  , sequence + start )
          )
-         #count += 1    
     
     results = remove_duplicates(results)
     return results
@@ -70,7 +56,7 @@ def main():
         if count > 0:
             print("")
 
-        for path in find_rook_moves( int( hops)  , start, "", int(hops)):
+        for path in find_rook_moves( int( hops)  , start, ""):
             print(path)
 
         count += 1
