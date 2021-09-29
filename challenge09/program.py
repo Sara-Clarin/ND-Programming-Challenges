@@ -57,8 +57,8 @@ def count_masked2( mask, bitstream, frames, num_bitstream):
     count = 0
     target = 15
 
-    if mask > 1:
-        for i in range( frames):
+    if True:
+        for i in range( 32 - 3):
             test_mask = mask << i
             test_target = target << i
             #print(f'mask: {test_mask:08b}')
@@ -69,7 +69,7 @@ def count_masked2( mask, bitstream, frames, num_bitstream):
                  count += 1
             #print(f'{test_mask:08b} ')
     elif mask == 1:
-        for i in range( num_bitstream):
+        for i in range( frames ):
             test_mask = mask << i
             test_target = target << i
 
@@ -109,10 +109,10 @@ def main():
         else:
             mask_bits = 0
         
-        frames = stream_bits - mask_bits + 1
+        #frames = stream_bits - mask_bits + 1
          
-        if mask_bits <= 1:            # case that we have a 1 or a 0
-            frames = stream_bits - 3
+        #if mask_bits <= 1:            # case that we have a 1 or a 0
+        frames = stream_bits
 
         count = count_masked2( mask, bitstreamb, frames, stream_bits)
 
