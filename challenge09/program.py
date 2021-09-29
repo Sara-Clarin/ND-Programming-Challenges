@@ -48,54 +48,75 @@ def count_masked( mask, bitstream, bits):
 
             if bitstream & test_mask:
                 count += 1
-   # while right < 9:        
     return count
 
-def count_masked2( mask, bitstream, frames):
+def count_masked2( mask, bitstream, frames, num_bitstream):
     right = 1
     left = 0    
     #print("in function")
     count = 0
+    target = 15
 
-    for i in range( frames):
-        test_mask = mask << i
-        #print(f'{test_mask:08b}')
+    if mask > 1:
+        for i in range( frames):
+            test_mask = mask << i
+            test_target = target << i
+            #print(f'mask: {test_mask:08b}')
+            #print(f'bitstream: {bitstream:08b}')
+            #print(f'target: {test_target:08b}')
 
-        if bitstream & test_mask:
-            count += 1
-   # while right < 9:        
+            if (bitstream & test_target) == test_mask :
+                 count += 1
+            #print(f'{test_mask:08b} ')
+    elif mask == 1:
+        for i in range( num_bitstream):
+            test_mask = mask << i
+            test_target = target << i
+
+            if (bitstream & test_target) == test_mask:
+                count += 1
+
+    else:
+        for i in range( frames):
+            test_mask = mask << i
+            test_target = target << i
+
+            if (bitstream & test_target) == 0:
+                count += 1
+
     return count
 
 
 def main():
 
-    #for mask, bitstream in [ map(int, [line.split() for line in sys.stdin.readlines())] ]: 
-        #mask, bitstream = process_input(line)
-
     for index, line in enumerate(sys.stdin.readlines(), 1):
-        line = line.strip().split()
-        #mask, bitstream = map(int, line)
-        mask1, bitstream = line
+        mask1, bitstream = line.strip().split()
         mask = int(HEXVAL[mask1])
         bitstreamb = int(bitstream)
+
         #print(mask)
         #print(f'{mask:08b}')
         #print(f'{bitstreamb} : {bitstreamb:32b}')
     
         if bitstreamb > 0:
-            bits = math.floor(math.log2(bitstreamb)) + 1
+            stream_bits = math.floor(math.log2(bitstreamb)) + 1
         else:
-            bits = 0
+            stream_bits = 0
         #print(f'Bits: {bits}')       
 
         if mask > 0:
-            bits2 = math.floor(math.log2(mask)) + 1
+            mask_bits = math.floor(math.log2(mask)) + 1   # if mask = 1, bits = 1
         else:
-            bits2 = 0
+            mask_bits = 0
         
-        frames = bits - bits2 + 1
-        
-        count = count_masked2( mask, bitstreamb, frames)
+        frames = stream_bits - mask_bits + 1
+         
+        if mask_bits <= 1:            # case that we have a 1 or a 0
+            frames = stream_bits - 3
+
+        count = count_masked2( mask, bitstreamb, frames, stream_bits)
+
+
         #count = count_masked( mask, bitstreamb, bits)
         #mask_string = char
         print(f'{index}. {bitstreamb} contains 0x{mask1} {count} times')
