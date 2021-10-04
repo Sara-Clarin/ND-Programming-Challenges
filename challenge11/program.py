@@ -35,7 +35,7 @@ def main():
 
     cache = {}
     for index,target in enumerate(map(int, sys.stdin), 1):
-        min_tx = get_dogecoins( target, 0 , cache)
+        min_tx = get_dogecoins( target,  cache)
         print(f'{index}. Minimum number of doge transactions: {min_tx}')
 
 
