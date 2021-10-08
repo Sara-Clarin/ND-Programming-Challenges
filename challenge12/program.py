@@ -15,9 +15,6 @@ def make_grid(n):
     for _ in range(n):
         grid.append( [big] + list(map(int, sys.stdin.readline().split())))
 
-    #print("the grid: ")
-    #for item in grid:
-        #print(item)
     return grid
 
 
@@ -31,26 +28,17 @@ def get_kakamora( grid, n):
     # build the table
     for row in range(1, n+1):
         for col in range(1, n+1):
-            if row == 12 and col == 12:
 
-                table[row][col] = min(
-                    table[row][col -1], # from 'west'
-                    table[row - 1][col],     # from 'north'
-                    table[ row - 1][col - 1]  # from northwest
-                 )   +  grid[row][col] 
+            table[row][col] = min(
+                table[row][col -1], # from 'west'
+                table[row - 1][col],     # from 'north'
+                table[ row - 1][col - 1]  # from northwest
+             )   +  grid[row][col] 
 
-            else:
-                table[row][col] = min(
-                    table[row][col -1], # from 'west'
-                    table[row - 1][col],     # from 'north'
-                    table[ row - 1][col - 1]  # from northwest
-                 )   + grid[row][col] 
         
             if table[row][col] >= jefe:
                 table[row][col] -= jefe
            
-    #for element in table:
-        #print(element)     
     return table
 
 
@@ -63,24 +51,18 @@ def find_path( grid, n, table):
         path.append(grid[row][col])
 
         # check horizontal (previous col)
-        if table[row][col] - grid[row][col] == table[ row - 1][col]:
-            row -= 1
-        # check vertical (precious row)
-        elif table[row][col] - grid[row][col] == table[ row] [col - 1 ]:
+        if table[row][col] - grid[row][col] == table[ row ][col - 1]:
             col -= 1
+        # check vertical (precious row)
+        elif table[row][col] - grid[row][col] == table[ row - 1] [col ]:
+            row -= 1
         # otherwise, diagonal
         else:
             row -= 1
             col -= 1 
 
-
-        # otherwise, diagonal
     path.reverse()
     return path
-
-def path_trace(x): 
-    pass
-    
 
 
 def main():
@@ -94,12 +76,9 @@ def main():
         if n != 0:
             grid = make_grid(n)
             table = get_kakamora(grid, n)
-            #print(" path: ")
             path = find_path( grid, n, table)
-            path_len = sum(path)
-            print(path_len)
-            #print ' '.join(i for i in path)
-            #[path_trace(i) for i in path]
+
+            print(sum(path))
             print(*path, sep = " ")
 
 if __name__ == "__main__":
