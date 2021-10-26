@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-
-
-import sys, math
+import sys, math, collections
 
 def taeho_tree( level, n , array, maxlevel, leaves):
     '''Goal: build a string of the nodes at each level
@@ -18,20 +16,20 @@ def taeho_tree( level, n , array, maxlevel, leaves):
         #del array[ n//2 ]
 
     else:
-        windowsize = n // (level + 1)
+        windowsize = n // (2**level)
         start = 0
-        end = windowsize
-        string = ""
+        end = windowsize - 1
   
         #print( f'*****level {level} ')
         levelstr = ""
         for i in range (2**level):
-            mid = (start + end) // 2
+            #mid = (start + end) // 2
             #mid = 1 + (end - 1) // 2
-            #print(f'windowsize: {windowsize}')
-            #print( f"start: {start} end: {end} mid: {mid}")
+            mid = math.ceil ( (start + end) / 2)
+            print(f'windowsize: {windowsize}')
+            print( f"start: {start} end: {end} mid: {mid}")
             median = array [mid ] 
-            leaves.remove( median )
+            #leaves.remove( median )
 
             levelstr = levelstr + " " + str(median)
             #print( median )
@@ -76,21 +74,64 @@ def split_array( array):
     print( f'Middle: {mid} start: {start} end: {end} windowsize: {windowsize}')
     
 
+# flow pattern: get median
+# get left child
+# get right child
+# recurse on left subset, return
+# recurse on right subset
+
+# core issue: if we "recurse left" as our first call, we'll go all the way down that subtree before returning to the right at all. Need some sort of backtracking
+
+#idea: get median. function(
+
+# another idea: have a variable keeping track of what level of recursion we're on. Then we add it to the appropriate list, dict: { level : [ nodes on a level ] }
+
+def MyTree( level, array, nodedict, maxlevel ):
+    n = len(array)
+
+    # base cases
+    if n  == 0:
+        return
+
+    if n  == 1:
+        nodedict[ level ].append( array[0] )
+        return
+
+    # recursive case
+    mid = n //  2
+    nodedict[level].append( array[mid])    
+
+    MyTree( level + 1, array[0:mid], nodedict, maxlevel)
+    MyTree( level + 1, array[mid+1:n], nodedict, maxlevel) 
+
+    return nodedict
+
+def PrintNodeDict( nodedict ):
+
+    for key, value in nodedict.items():
+        print( " ".join(str(e) for e in value ) )
 
 def main():
 
     n = 0
+    leveldict = collections.defaultdict( list)
+
     for line in sys.stdin.readlines():
+        nodedict = collections.defaultdict( list )
         array = list( map( int, line.strip().split() ) )
         arrayset = set(array)
         n = len(array)
-        treeheight = math.floor(math.log2( n )) 
+        treeheight = math.ceil(math.log2( n )) 
         #print(f' starting array: {array}')
         #taeho_tree( 0, n, array,  treeheight, arrayset  )
-        
-         
 
-        
+        leveldict = MyTree( 0, array, nodedict, treeheight) 
+        if leveldict:
+            PrintNodeDict(leveldict)
+            leveldict.clear()  
+        else:
+            print("0")      
+         
     #u = 0
     #dummy = number_of_nodes( u  )
     #split_array( array )
