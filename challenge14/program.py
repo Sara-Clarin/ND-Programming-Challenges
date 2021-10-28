@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
+
+# Sara Clarin
+# Binary Christmas tree: program to find a binary pattern in an array-represented tree using recursion
+
 import sys
 
-PATH_COUNT = 0
 tally = list()
 
-
-
-  
 
 def get_left( index, num_nodes):
     if 2*index + 1<= num_nodes:
@@ -18,8 +18,6 @@ def get_right( index, num_nodes):
         return 2*index + 2
     return -1
 
-
-
 def XmasV3(  index , num_nodes, tree, target, tally, targvals):
         #base cases
         if index == -1:
@@ -30,7 +28,6 @@ def XmasV3(  index , num_nodes, tree, target, tally, targvals):
 
         # recursive cases
         newtarget = []
-        #print( f'Index: {index}, node: {tree[index]}') 
         node = tree[index]
 
         # check if we can start target over
@@ -52,19 +49,14 @@ def XmasV3(  index , num_nodes, tree, target, tally, targvals):
 
 
 def main():
+
     for line in sys.stdin.readlines():
         target, tree = line.split()
         bin_target = str(bin( int(target))).lstrip('0b')
         n = len(tree)
-        #print( target, tree, bin_target)
-        #XmasTreePaths
         tally.clear()
 
         if target != '0' and target != '1':
-        #print(bin_target.lstrip('0b'))
-            #xmasv2( 0, n, tree, bin_target, 0, tally)
-        #print(f"COUNT IS: {c}")
-
             targvals = [ ]
             XmasV3( 0, n, tree, bin_target, tally, targvals )
             print(f'Paths that form {target} in binary ({bin_target}): {len(tally)}')
@@ -74,5 +66,7 @@ def main():
 
         else:
             print(f"Paths that form 0 in binary (0): {tree.count('0')}")
+
+
 if __name__ == "__main__":
     main()
