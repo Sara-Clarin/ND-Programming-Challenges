@@ -8,7 +8,7 @@ def read_graph( N):
     graph: adjacency list for an undirected graph
 
     '''
-    graph = collections.defaultdict( dict )
+    graph = collections.defaultdict( list )
 
     line = sys.stdin.readline().strip().split()
     #src, trg = map(int, line)
@@ -20,8 +20,8 @@ def read_graph( N):
         #print(line)
         src,trg = map(int, line )
         
-        graph[src][trg] = edge_id
-        graph[trg][src] = edge_id
+        graph[src].append( trg )
+        graph[trg].append( src)
         edge_id += 1
 
         line = sys.stdin.readline().strip().split()
@@ -33,17 +33,13 @@ def hamilton_cycle( graph, start, vertex, visited, path, n):
     '''
     Brute force all cyclic paths via recursive DFS
     '''
-    #visited = collections.defaultdict( int)
-    #visited[vertex] 
-    #visited[vertex] +=  1
-
     # base case: back at starting node, and visited 
     if len(visited) == n and path[-1] == start: #visited[vertex] == 2 #and len(visited.keys()) == n: 
         return path
 
     # recursive step: backtrack if the path isn't what we want
 
-    for neighbor in graph[vertex]:
+    for neighbor in sorted(graph[vertex]):
 
         if neighbor in visited:
             continue
@@ -78,6 +74,7 @@ def main():
         #path.append(start)
         #visited.add( start)
         result = hamilton_cycle( graph, start, start, visited, path, n )
+        #result = [ '1' ]
 
         if result:
             result.insert(0, start)
@@ -85,7 +82,7 @@ def main():
         else:
             print('None')
 
-        graph.clear()
+        #graph.clear()
 
 if __name__ == "__main__":
     main()
