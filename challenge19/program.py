@@ -11,8 +11,6 @@ def read_graph( N):
     graph = collections.defaultdict( list )
 
     line = sys.stdin.readline().strip().split()
-    #src, trg = map(int, line)
-    #print(f'first line: {line}')
     start = int(line[0])
 
     edge_id = 0
@@ -50,12 +48,6 @@ def hamilton_cycle( graph, start, vertex, visited, path, n):
 
         if hamilton_cycle( graph, start, neighbor, visited, path, n ):
             return path
-        
-        # backtrack: pretend this is new starting point
-        #newvisited = set()
-        #newpath = []
-        #path.clear()
-        #hamilton_cycle( graph, neighbor, newvisited, newpath, n)
     
         visited.remove( neighbor)
         path.pop(-1) 
@@ -74,8 +66,7 @@ def main():
         #path.append(start)
         #visited.add( start)
         result = hamilton_cycle( graph, start, start, visited, path, n )
-        #result = [ '1' ]
-
+        
         if result:
             result.insert(0, start)
             print(" ".join(  map(str, result))  )
