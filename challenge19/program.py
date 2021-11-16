@@ -6,7 +6,6 @@ import sys, collections
 def read_graph( N):
     '''
     graph: adjacency list for an undirected graph
-
     '''
     graph = collections.defaultdict( list )
 
@@ -32,8 +31,11 @@ def hamilton_cycle( graph, start, vertex, visited, path, n):
     Brute force all cyclic paths via recursive DFS
     '''
     # base case: back at starting node, and visited 
-    if len(visited) == n and path[-1] == start: #visited[vertex] == 2 #and len(visited.keys()) == n: 
-        return path
+    if len(visited) == n:
+        if path[-1] == start: #visited[vertex] == 2 #and len(visited.keys()) == n: 
+            return path
+        else:
+            return None
 
     # recursive step: backtrack if the path isn't what we want
 
@@ -51,6 +53,12 @@ def hamilton_cycle( graph, start, vertex, visited, path, n):
     
         visited.remove( neighbor)
         path.pop(-1) 
+    
+    if len(path) == n and path[-1] == start:
+        return path
+    else:
+        return None
+
 
 
 def main():
@@ -63,8 +71,6 @@ def main():
         #visited = collections.defaultdict( int )
         visited = set( )
         path = []
-        #path.append(start)
-        #visited.add( start)
         result = hamilton_cycle( graph, start, start, visited, path, n )
         
         if result:
