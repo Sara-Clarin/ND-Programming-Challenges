@@ -3,42 +3,42 @@
 
 import sys, collections
 
-def read_graph( N):
+def read_graph( ):
     '''
     graph: adjacency list for an undirected graph
+    each vertex contains [ v1, v2 ....vn] neighbors
+    N: number of vertices
     '''
     graph = collections.defaultdict( list )
 
     line = sys.stdin.readline().strip().split()
-    start = int(line[0])
+    start = 1
 
-    edge_id = 0
-    while line[0] != '%':
-        #print(line)
+    while line[0] != '%':           # '%' is the sentinel value
         src,trg = map(int, line )
         
         graph[src].append( trg )
         graph[trg].append( src)
-        edge_id += 1
-
         line = sys.stdin.readline().strip().split()
 
-    #print(f' next graph: ')
     return graph, start
 
 def hamilton_cycle( graph, start, vertex, visited, path, n):
     '''
-    Brute force all cyclic paths via recursive DFS
+    Brute force all hamiltonian cyclic paths via recursive DFS
+    visited: set of nodes visited for backtracking
+    path: ordered list of vertices in the current DFS path
     '''
+
     # base case: back at starting node, and visited 
-    if len(visited) == n:
-        if path[-1] == start: #visited[vertex] == 2 #and len(visited.keys()) == n: 
+    if len(path) == n:  
+        if start in graph[vertex]:
+            path.append(start)          
             return path
         else:
             return None
 
     # recursive step: backtrack if the path isn't what we want
-
     for neighbor in sorted(graph[vertex]):
 
         if neighbor in visited:
@@ -46,40 +46,30 @@ def hamilton_cycle( graph, start, vertex, visited, path, n):
 
         visited.add( neighbor)
         path.append( neighbor)
-        #print(f'path: {path}')
 
         if hamilton_cycle( graph, start, neighbor, visited, path, n ):
             return path
     
         visited.remove( neighbor)
         path.pop(-1) 
-    
-    if len(path) == n and path[-1] == start:
-        return path
-    else:
-        return None
 
-
-
+        
 def main():
 
     for n in sys.stdin:
         n = int(n.strip())
-        graph, start = read_graph( n )
-        #print(f'{graph}')
+        graph, start = read_graph( )
 
-        #visited = collections.defaultdict( int )
         visited = set( )
+        visited.add( start)
         path = []
+        path.append(start)
         result = hamilton_cycle( graph, start, start, visited, path, n )
         
         if result:
-            result.insert(0, start)
             print(" ".join(  map(str, result))  )
         else:
             print('None')
-
-        #graph.clear()
 
 if __name__ == "__main__":
     main()
