@@ -1,0 +1,4 @@
+# External contest #2: Leetcode weekly contest 269
+
+-  completed on 9/28/2021 by sclarin2
+-  see attached screenshots for details
